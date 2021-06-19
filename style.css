@@ -1,0 +1,21 @@
+#game_board {
+  margin: 5% auto;
+  width: 120px;
+}
+
+#game_board tr {
+  height: 35px;
+}
+
+#game_board tr td {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+}
+
+.heading {
+  text-align: center;
+}
+/*# sourceMappingURL=style.css.map */
