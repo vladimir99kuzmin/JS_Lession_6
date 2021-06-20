@@ -1,3 +1,5 @@
+//сделал всё тяп-ляп, нет времени, прошу прощения
+//крестики-нолики из практикума
 function ticktacktoe() {
     XOs = [];
     let turnX = true;
@@ -43,7 +45,7 @@ function ticktacktoe() {
 
         checkWinner();
     }
-    
+
     function checkWinner() {
         for (let i = 0; i < 3; i++) {
             if (XOs[i][0] === XOs[i][1] && XOs[i][0] === XOs[i][2] && XOs[i][0] !== "") {
@@ -68,7 +70,7 @@ function ticktacktoe() {
             }
             else if (XOs[0][0] === XOs[1][1] && XOs[0][0] === XOs[2][2] && XOs[0][0] !== "") {
                 if (XOs[0][0] === "X") {
-                    alert("X victory"); 
+                    alert("X victory");
                 }
                 if (XOs[0][0] === "O") {
                     alert("O victory");
@@ -101,5 +103,92 @@ function ticktacktoe() {
         ticktacktoe();
     }
 }
-//сделал всё тяп-ляп, нет времени
+
 ticktacktoe();
+
+//магазин
+class catalogItemCreator {
+    constructor(id, price, name) {
+        return {
+            id: id,
+            price: price,
+            name: name
+        }
+    }
+}
+
+var items = [];
+var cartItems = [];
+var catalog = document.getElementById("catalog");
+var cart = document.getElementById("cart");
+
+for (let i = 0; i < (Math.random() * 8) + 2; i++) {
+    itemToPush = new catalogItemCreator(i, (Math.random() * 100).toFixed(2), "Item " + i);
+    items.push(itemToPush);
+    catalog.innerHTML += '<div class="item catalogItem" data-id="' + itemToPush.id + '">' + itemToPush.name + '<br>' + itemToPush.price + '$' + '<br>ClickOnMe!' +  '</div>';
+}
+
+var backupCart = cart.innerHTML;
+var backupCatalog = catalog.innerHTML;
+
+document.onclick = event => {
+    if (event.target.getAttribute('data-id') !== null) {
+        if (event.target.classList.contains("catalogItem")) {
+            items.forEach(elem => {
+                if (elem.id == event.target.getAttribute('data-id')) {
+                    if (addItemToCart(elem)) {
+                        event.target.remove();
+                        countTotal();
+                    }
+                }
+            });
+        }
+        else if (event.target.classList.contains("cartItem")) {
+            items.forEach(elem => {
+                if (elem.id == event.target.getAttribute('data-id')) {
+                    if (removeItemFromCart(elem)) {
+                        event.target.remove();
+                        countTotal();
+                    }
+                }
+            });
+        }
+
+    }
+}
+
+function addItemToCart(elem) {
+    current = '<div class="item cartItem" data-id="' + elem.id + '">' + elem.name + '<br>' + elem.price + '$' + '<br>ClickOnMe!' + '</div>';
+    if (!cart.innerHTML.includes(current)) {
+        cartItems.push(elem);
+        cart.innerHTML = current + cart.innerHTML;
+        return true;
+    }
+    else return false;
+}
+
+function removeItemFromCart(elem) {
+    current = '<div class="item catalogItem" data-id="' + elem.id + '">' + elem.name + '<br>' + elem.price + '$' + '<br>ClickOnMe!' + '</div>';
+    if (!catalog.innerHTML.includes(current)) {
+        let index = cartItems.findIndex(el => el.name == elem);
+        cartItems.splice(index, 1);
+        catalog.innerHTML = current + catalog.innerHTML;
+        return true;
+    }
+    else return false;
+}
+
+function countTotal() {
+    let total = document.getElementById("totalCost");
+    let totalCost = 0;
+    for (let elem of cartItems) {
+        totalCost += Number(elem.price);
+    }
+    total.innerHTML = totalCost.toFixed(2);
+}
+
+function removeAll() {
+    cartItems = [];
+    cart.innerHTML = backupCart;
+    catalog.innerHTML = backupCatalog;
+}
