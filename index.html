@@ -10,14 +10,27 @@
 </head>
 
 <body>
-    <h1>Lession 6</h1>    
+    <h1>Lession 6</h1>
     <div id="tictacktoe">
         <h2 class="heading">TickTackToe</h2>
         <table id="game_board">
-            
         </table>
     </div>
-    <script src="main.js"> </script>
+    <div class="shop">
+        <h2 class="heading">Shop</h2>
+        <div class="container">
+            <p>Каталог</p>
+            <p>Корзина</p>
+            <div id="catalog" class="catalog"></div>
+            <div id="cart" class="cart">
+                <div class="total">
+                    <p>Итого: <span id="totalCost">0</span>$</p>
+                    <button onclick="removeAll()">RemoveAll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script async src="main.js"> </script>
 </body>
 
 </html>
